@@ -14,8 +14,8 @@ function App() {
             <ol id={styles.players} className={styles.highlightPlayer}>
               <Player/>
               <Player/>
-
             </ol>
+            
         </div>
      </main>
     </>
