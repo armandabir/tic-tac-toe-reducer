@@ -10,12 +10,31 @@ const intialBoard=[
   [null,null,null]
 ]
 
-const PLAYERS={
-  X:"player1",
-  O:"player2"
+const intialGameState={
+  "players":{
+    X:"player1",
+    O:"player2"
+  },
+  "activePlayer":"X",
+  "gameTurns":[
+    // {"palyer":X , "square":{"row":1,"col":2}}
+  ]
 }
 
-function gameTurnsReduser(gameTurns,action){
+function gameTurnsReduser(gameState,action){
+
+  switch (action.type) {
+    case "changeName":
+          let tempPlayers={...gameState.players,[action.playerSymbol]:action.playerName}
+          return {players:tempPlayers}
+      break;
+
+    case "gameTurn":
+        let currentPlayer="X"
+  
+    default:
+      break;
+  }
 
 }
 
@@ -24,14 +43,22 @@ function App() {
 
   
 function handleOnChangeName(name,symbol){
-  setPlayers((prevPlayers)=>{
-    return {...prevPlayers,[symbol]:name}
+    dispach({
+      type:"changeName",
+      playerName:name,
+      playerSymbol:symbol
+    })
+}
+
+function HandleOnSquareClick(ri,ci){
+  dispach({
+    type:"gameTurn",
+    turn:{"row":ri,"col":ci}
   })
 }
 
-const [players,setPlayers]=useState(PLAYERS);
-const [gameTurns,dispach]=useReducer(gameTurnsReduser,[]);
-const activePlayer="X"
+const [gameState,dispach]=useReducer(gameTurnsReduser,intialGameState);
+
 
 
   return (
@@ -43,10 +70,10 @@ const activePlayer="X"
      <main>
         <div id={styles.gameContainer}>
             <ol id={styles.players} className={styles.highlightPlayer}>
-              <Player playerName={players.X} playerSymbol={'X'} isActive={activePlayer=="X"} onChangeName={handleOnChangeName}/>
-              <Player playerName={players.O} playerSymbol={'O'} isActive={activePlayer=="O"} onChangeName={handleOnChangeName}/>
+              <Player playerName={gameState.players.X} playerSymbol={'X'} isActive={gameState.activePlayer=="X"} onChangeName={handleOnChangeName}/>
+              <Player playerName={gameState.players.O} playerSymbol={'O'} isActive={gameState.activePlayer=="O"} onChangeName={handleOnChangeName}/>
             </ol>
-          <GameBoard board={intialBoard}/>
+          <GameBoard board={intialBoard} onSquareClick={HandleOnSquareClick}/>
         </div>
      </main>
     </>

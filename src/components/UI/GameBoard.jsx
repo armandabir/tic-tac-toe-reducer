@@ -1,7 +1,10 @@
 import styles from "./../styles/gameBoard.module.scss"
 
 
-export default function GameBoard({board}){
+export default function GameBoard({board,onSquareClick}){
+    function HandleScquareClick(ri,ci){
+        onSquareClick(ri,ci);
+    }
     return (
 
         <ol id={styles.gameBoard}>
@@ -12,7 +15,7 @@ export default function GameBoard({board}){
                     {
                          row.map((col,ci)=>
                             <li key={ci}>
-                                <button>{col}</button>
+                                <button onClick={()=>HandleScquareClick(ri,ci)}>{col}</button>
                             </li>
                             
                         )
