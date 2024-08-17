@@ -114,10 +114,6 @@ const [gameState,dispach]=useReducer(gameTurnsReduser,intialGameState);
 const gameBoard=drivedGameBoard(gameState)
 const winner=drivedWinner(gameBoard,gameState.players)
 const hasDraw=gameState.gameTurns.length == 9 && !winner
-useEffect(()=>{
-  console.log(gameState)
-},[gameState])
-
 
 
 
